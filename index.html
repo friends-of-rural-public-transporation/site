@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orcas Island Public Transit Community Meeting</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Base screen styles */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Simulates the flyer on screen */
+        .flyer-container-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 2rem;
+            background-color: #f3f4f6;
+        }
+        .flyer-container {
+            width: 100%;
+            max-width: 816px; /* 8.5in * 96dpi */
+            min-height: 1056px; /* 11in * 96dpi */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            background-color: white;
+            border-radius: 0.5rem;
+        }
+
+        /* --- PRINT-SPECIFIC STYLES --- */
+        /* This block is ONLY applied when you print the page */
+        @media print {
+            /* Reset everything for a clean slate */
+            html, body {
+                width: 8.5in;
+                height: 11in;
+                margin: 0 !important;
+                padding: 0 !important;
+                background-color: #fff; /* Ensure background is white */
+            }
+
+            /* Hide the screen wrapper */
+            .flyer-container-wrapper {
+                padding: 0;
+                background-color: #fff;
+            }
+
+            /* Force the flyer to be the exact size of the paper and remove screen styles */
+            .flyer-container {
+                width: 100% !important;
+                height: 100% !important;
+                max-width: none !important;
+                min-height: 0 !important;
+                position: absolute;
+                top: 0;
+                left: 0;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                margin: 0 !important;
+                padding: 0.5in !important; /* Standard print margin */
+                box-sizing: border-box !important;
+                overflow: hidden; /* CRITICAL: Prevent content from spilling */
+                
+                /* Use flexbox to structure the content vertically */
+                display: flex;
+                flex-direction: column;
+            }
+
+            /* Force printing of all background colors */
+            .bg-blue-50, .bg-green-100, .bg-gray-50, .bg-blue-600 {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            header, footer {
+                flex-shrink: 0; /* Prevent header/footer from shrinking */
+            }
+
+            main {
+                flex-grow: 1; /* Allow main content to fill available space */
+                display: grid !important; /* Ensure grid layout is used */
+                /* This matches the md:grid-cols-3 (1 part + 2 parts) */
+                grid-template-columns: 1fr 2fr !important; 
+                gap: 1rem !important; /* Adjust gap for print */
+                overflow: hidden; /* Prevent grid content from overflowing */
+            }
+            
+            /* Constrain the left column and prevent it from breaking */
+            .left-column {
+                display: flex;
+                flex-direction: column;
+                page-break-inside: avoid;
+            }
+            
+            .left-column > div:last-child {
+                margin-top: auto; /* Push the "building together" box to the bottom of the column */
+            }
+
+            /* CRITICAL: Explicitly control the image size for print */
+            .left-column img {
+                max-width: 100%;
+                height: auto; /* Maintain aspect ratio */
+                max-height: 18vh; /* Limit the vertical space the image can take */
+                object-fit: cover;
+            }
+
+            /* Prevent other elements from breaking across pages */
+            .right-column, .right-column > div {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="flyer-container-wrapper">
+        <div class="flyer-container p-8 sm:p-12">
+            <header class="text-center border-b-4 border-blue-500 pb-6 mb-6">
+                <h2 class="text-xl sm:text-2xl font-bold text-gray-600">You're Invited to a Community Meeting</h2>
+                <h1 class="text-4xl sm:text-5xl font-black text-blue-800 mt-2">Let's Talk Public Transit on Orcas Island!</h1>
+                <p class="text-lg text-gray-700 mt-2">Hosted by the Friends of Rural Public Transportation</p>
+            </header>
+
+            <main class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Left Column for Key Info -->
+                <div class="md:col-span-1 bg-blue-50 rounded-lg p-6 left-column">
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="font-bold text-2xl text-blue-900 border-b-2 border-blue-200 pb-2 mb-3">Date & Time</h3>
+                            <p class="text-lg font-semibold text-gray-800">Tuesday, June 24, 2025</p>
+                            <p class="text-gray-600">12:00 PM - 2:00 PM</p>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-2xl text-blue-900 border-b-2 border-blue-200 pb-2 mb-3">Location</h3>
+                            <p class="text-lg font-semibold text-gray-800">Orcas Island Public Library</p>
+                            <p class="text-gray-600">Community Room</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-8">
+                        <img src="./forpt-image-cartoon.png" alt="Illustration of a happy community riding a blue transit van through a scenic island landscape" class="rounded-lg shadow-md w-full h-auto object-cover">
+                    </div>
+                     <div class="mt-8 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-md">
+                        <h4 class="font-bold">What we're building together:</h4>
+                        <p class="text-sm">A system for families, seniors, workers, visitors, and our environment.</p>
+                    </div>
+                </div>
+
+                <!-- Right Column for Details -->
+                <div class="md:col-span-2 space-y-6 right-column">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-3">Imagine an Orcas Island where...</h2>
+                        <ul class="space-y-2 text-gray-700 list-inside">
+                            <li class="flex items-start"><span class="text-green-500 mr-2">✔</span> You can hop on a bus from the ferry to Eastsound, Doe Bay, or Deer Harbor.</li>
+                            <li class="flex items-start"><span class="text-green-500 mr-2">✔</span> Kids can get to activities independently.</li>
+                            <li class="flex items-start"><span class="text-green-500 mr-2">✔</span> Neighbors have reliable backup transportation when their car is in the shop.</li>
+                            <li class="flex items-start"><span class="text-green-500 mr-2">✔</span> You can catch a ride to Moran State Park or Turtleback Mountain.</li>
+                            <li class="flex items-start"><span class="text-green-500 mr-2">✔</span> Visitors can explore our island without adding to traffic.</li>
+                            <li class="flex items-start"><span class="text-green-500 mr-2">✔</span> We reduce our carbon footprint, one shared ride at a time.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-3">Why Now? The Island Challenge</h2>
+                        <div class="space-y-4">
+                            <p><strong class="text-blue-700">The Ferry Squeeze:</strong> Keep cars off the ferry to create space for residents and essential services.</p>
+                            <p><strong class="text-blue-700">The Distance Dilemma:</strong> Connect the ferry landing to Eastsound and beyond without a personal vehicle.</p>
+                            <p><strong class="text-blue-700">The Hill Challenge:</strong> Provide an alternative to cycling for those who find our terrain difficult.</p>
+                        </div>
+                    </div>
+
+                    <div class="text-center bg-blue-600 text-white p-6 rounded-lg shadow-lg">
+                        <h2 class="text-3xl font-black mb-2">Join Us & Share Your Vision!</h2>
+                        <p class="mb-4">This is a community-driven initiative in the early visioning stages. We welcome all perspectives and ideas.</p>
+                        <p class="font-semibold">Whether you have ideas for routes, funding expertise, or simply believe this vision is worth pursuing—your voice matters.</p>
+                    </div>
+                </div>
+            </main>
+
+            <footer class="text-center mt-8 pt-6 border-t-2 border-gray-200">
+                <p class="text-gray-600 font-bold">Orcas Island Friends of Rural Public Transportation</p>
+                <a href="http://forpt.org" class="text-blue-600 hover:underline">forpt.org</a>
+                <p class="text-sm text-gray-500 mt-2">Together, we can create a transportation solution that strengthens our community.</p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
